@@ -1,4 +1,9 @@
 import StDialog from './dialog/index.js'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
+import { MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
+
 const components = [
   StDialog
 ]
@@ -13,10 +18,16 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
   
 export default {
+  ElementUI,
+  MessageBox,
+  Message,
   StDialog,
   install
 }
 export {
+  ElementUI,
+  MessageBox,
+  Message,
   StDialog,
   install
 }
