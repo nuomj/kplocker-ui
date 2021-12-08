@@ -1,6 +1,6 @@
 # kplocker-ui
 
-基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件
+基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件，需单独安装element-ui依赖并引入
 
 ## Install
 ```

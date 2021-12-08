@@ -1,7 +1,9 @@
 import StDialog from './dialog/index.js'
+import StSearchBar from './searchBar/index.js'
 
 const components = [
-  StDialog
+  StDialog,
+  StSearchBar
 ]
 const install = function(Vue) {
   components.forEach(component => {
@@ -15,9 +17,11 @@ if (typeof window !== 'undefined' && window.Vue) {
   
 export default {
   StDialog,
+  StSearchBar,
   install
 }
 export {
   StDialog,
+  StSearchBar,
   install
 }

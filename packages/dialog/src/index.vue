@@ -1,7 +1,6 @@
 <template>
   <el-dialog :top="top" :lock-scroll="lockScroll" :title="title" :visible.sync="dialog" :close-on-click-modal="closeOnClickModal" append-to-body :class="DialogClass" :width="width" @opened="openDialog" @close="close">
     <slot name="content" />
-    <slot name="footer" />
   </el-dialog>
 </template>
 <script>
@@ -30,7 +29,8 @@ export default {
       default: '15vh'
     },
     width: {
-      type: String
+      type: String,
+      default: '70%'
     }
   },
   data() {
