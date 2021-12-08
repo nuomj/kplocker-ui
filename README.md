@@ -1,24 +1,27 @@
 # kplocker-ui
 
-## Project setup
+基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件
+
+## Install
 ```
-npm install
+npm install kplocker-ui -S
 ```
 
-### Compiles and hot-reloads for development
+## Quick Start
 ```
-npm run serve
+// main.js中全局引入
+import Vue from 'vue'
+import kplockerUI from 'kplocker-ui'
+
+Vue.use(kplockerUI)
+
+// or
+import { StDialog } from 'kplocker-ui'
+Vue.use(StDialog)
 ```
 
-### Compiles and minifies for production
+## LICENSE
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+MIT
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
