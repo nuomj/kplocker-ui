@@ -1,5 +1,5 @@
-import StSearchBar from './src/index.vue'
-StSearchBar.install = function (Vue) {
-  Vue.component(StSearchBar.name, StSearchBar)
+import SearchBar from './src/index.vue'
+SearchBar.install = function (Vue) {
+  Vue.component(SearchBar.name, SearchBar)
 }
-export default StSearchBar
+export default SearchBar

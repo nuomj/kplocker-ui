@@ -5,7 +5,7 @@
       <el-select
         v-if="item.type === 'select' && !item.showVisible"
         v-model="fuzzyForm[item.name]"
-        :style="{width: item.width}"
+        :style="{ width: item.width }"
         :popper-class="item.popperClass"
         :multiple="item.multiple"
         :collapse-tags="item.multiple"
@@ -70,54 +70,55 @@
 </template>
 <script>
 export default {
-  name: 'StSearchBar',
+  name: 'SearchBar',
   props: {
     reset: {
       type: Boolean,
-      default: false
+      default: false,
     },
     searchArr: {
       type: Array,
       require: true,
       default() {
-        return []
-      }
+        return [];
+      },
     },
     addBtn: {
       type: Boolean,
-      default: false
+      default: false,
     },
     resetOrigin: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       fuzzyForm: {},
       fuzzyData: [],
       zoneList: [],
-      oldOptions: []
-    }
+      oldOptions: [],
+    };
   },
   watch: {
     searchArr: {
       immediate: true,
       handler(newVal) {
-        this.fuzzyData = newVal
-        const obj = {}
-        newVal.forEach(item => {
-          let defautValue = ''
+        this.fuzzyData = newVal;
+        const obj = {};
+        newVal.forEach((item) => {
+          let defautValue = '';
           if (item.valueType === 'Array') {
-            defautValue = []
+            defautValue = [];
           }
-          obj[item.name] = item.value ? item.value : defautValue
-        })
-        console.log(obj)
-        this.fuzzyForm = Object.assign({}, this.fuzzyForm, obj)
+          obj[item.name] = item.value ? item.value : defautValue;
+        });
+        console.log(obj);
+        this.fuzzyForm = Object.assign({}, this.fuzzyForm, obj);
         // this.getZoneListFun()
-      }
-    }
+      },
+      deep: true, // 深度监听
+    },
   },
   methods: {
     // getZoneListFun() {
@@ -149,43 +150,43 @@ export default {
     //     })
     // },
     search() {
-      this.$emit('search', this.fuzzyForm)
+      this.$emit('search', this.fuzzyForm);
     },
     resetForm() {
-      this.$emit('clearSearch')
+      this.$emit('clearSearch');
       if (this.resetOrigin) {
-        this.searchArr.forEach(item => {
-          let defautValue = ''
+        this.searchArr.forEach((item) => {
+          let defautValue = '';
           if (item.valueType === 'Array') {
-            defautValue = []
+            defautValue = [];
           }
-          this.fuzzyForm[item.name] = item.value ? item.value : defautValue
-        })
+          this.fuzzyForm[item.name] = item.value ? item.value : defautValue;
+        });
       } else {
         Object.keys(this.fuzzyForm).forEach(() => {
-          this.searchArr.forEach(item => {
+          this.searchArr.forEach((item) => {
             if (item.valueType === 'Array') {
-              this.fuzzyForm[item.name] = []
+              this.fuzzyForm[item.name] = [];
             } else {
-              this.fuzzyForm[item.name] = ''
+              this.fuzzyForm[item.name] = '';
             }
-          })
-        })
+          });
+        });
       }
     },
     changeSelect(obj, val) {
-      console.log(obj, val)
+      console.log(obj, val);
       if (obj.clearValues && obj.clearValues.length > 0) {
-        const _clearValues = obj.clearValues
+        const _clearValues = obj.clearValues;
         for (let i = 0; i < _clearValues.length; i++) {
           if (Object.prototype.toString.call(this.fuzzyForm[_clearValues[i]]) === '[object String]') {
-            this.fuzzyForm[_clearValues[i]] = ''
+            this.fuzzyForm[_clearValues[i]] = '';
           }
           if (Object.prototype.toString.call(this.fuzzyForm[_clearValues[i]]) === '[object Array]') {
-            this.fuzzyForm[_clearValues[i]] = []
+            this.fuzzyForm[_clearValues[i]] = [];
           }
           if (Object.prototype.toString.call(this.fuzzyForm[_clearValues[i]]) === '[object Object]') {
-            this.fuzzyForm[_clearValues[i]] = {}
+            this.fuzzyForm[_clearValues[i]] = {};
           }
         }
       }
@@ -194,65 +195,65 @@ export default {
         if (obj.change) {
           const _obj = {
             name: obj.name,
-            value: val
-          }
-          this.$emit('changeSelect', _obj)
+            value: val,
+          };
+          this.$emit('changeSelect', _obj);
         }
         if (obj.cascade) {
-          this.$emit('changeCascade', { key: obj.name, value: val })
+          this.$emit('changeCascade', { key: obj.name, value: val });
         }
-        return
+        return;
       }
       // 多选
-      let resultArr = []
-      let temporaryArr = val
-      const allValues = []
+      let resultArr = [];
+      let temporaryArr = val;
+      const allValues = [];
       // 保留所有值
       for (const item of obj.optArr) {
-        allValues.push(item.value)
+        allValues.push(item.value);
       }
       // 用来储存上一次的值，可以进行对比
-      const oldVal = this.oldOptions.length === 1 ? this.oldOptions[0] : []
+      const oldVal = this.oldOptions.length === 1 ? this.oldOptions[0] : [];
       // 若是全部选择
-      if (val.includes('ALL_SELECT')) temporaryArr = allValues
+      if (val.includes('ALL_SELECT')) temporaryArr = allValues;
       // 取消全部选中 上次有 当前没有 表示取消全选
-      if (oldVal.includes('ALL_SELECT') && !val.includes('ALL_SELECT')) temporaryArr = []
+      if (oldVal.includes('ALL_SELECT') && !val.includes('ALL_SELECT')) temporaryArr = [];
       // 点击非全部选中 需要排除全部选中 以及 当前点击的选项
       // 新老数据都有全部选中
       if (oldVal.includes('ALL_SELECT') && val.includes('ALL_SELECT')) {
-        const index = val.indexOf('ALL_SELECT')
-        val.splice(index, 1) // 排除全选选项
-        temporaryArr = val
+        const index = val.indexOf('ALL_SELECT');
+        val.splice(index, 1); // 排除全选选项
+        temporaryArr = val;
       }
       // 全选未选 但是其他选项全部选上 则全选选上 上次和当前 都没有全选
       if (!oldVal.includes('ALL_SELECT') && !val.includes('ALL_SELECT')) {
-        if (val.length === allValues.length - 1) temporaryArr = ['ALL_SELECT'].concat(val)
+        if (val.length === allValues.length - 1) temporaryArr = ['ALL_SELECT'].concat(val);
       }
       // 储存当前最后的结果 作为下次的老数据
-      this.oldOptions[0] = temporaryArr
+      this.oldOptions[0] = temporaryArr;
       if (temporaryArr[0] === 'ALL_SELECT') {
-        var arr = [].concat(temporaryArr)
-        arr.splice(0, 1)
-        resultArr = arr
+        var arr = [].concat(temporaryArr);
+        arr.splice(0, 1);
+        resultArr = arr;
       } else {
-        resultArr = temporaryArr
+        resultArr = temporaryArr;
       }
 
       // console.log('resultArr:', resultArr)
       // console.log('temporaryArr:', temporaryArr)
-      this.fuzzyForm[obj.name] = temporaryArr
+      this.fuzzyForm[obj.name] = temporaryArr;
       if (obj.change) {
         const _obj = {
           name: obj.name,
-          value: resultArr
-        }
-        this.$emit('changeSelect', _obj)
+          value: resultArr,
+        };
+        this.$emit('changeSelect', _obj);
       } else {
-        this.$emit('changeSelect', resultArr)
+        this.$emit('changeSelect', resultArr);
       }
     },
     handleAdd() {
-      this.$emit('handleAdd', this.fuzzyForm)
+      this.$emit('handleAdd', this.fuzzyForm);
     },
     /**
      * 父组件更新数据
@@ -262,23 +263,23 @@ export default {
      * e.value [String|Array]
      */
     changeData(e) {
-      const fuzzyData = this.fuzzyData
-      let i = 0
+      const fuzzyData = this.fuzzyData;
+      let i = 0;
       while (i < fuzzyData.length) {
         if (fuzzyData[i].name === e.name) {
-          fuzzyData[i].optArr = e.optArr
-          this.fuzzyForm[e.name] = e.value
-          break
+          fuzzyData[i].optArr = e.optArr;
+          this.fuzzyForm[e.name] = e.value;
+          break;
         }
-        i++
+        i++;
       }
-      this.fuzzyData = fuzzyData
-    }
-  }
-}
+      this.fuzzyData = fuzzyData;
+    },
+  },
+};
 </script>
 <style scoped>
-  .right {
-    float: right;
-  }
+.right {
+  float: right;
+}
 </style>
