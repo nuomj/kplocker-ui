@@ -1,7 +1,7 @@
 {
   "name": "kplocker-ui",
-  "version": "0.0.9",
-  "description": "基于element-ui封装的常用业务组件",
+  "version": "0.1.0",
+  "description": "基于element-ui封装的常用业务组件、业务中的常用utils包",
   "keywords": [
     "vue",
     "vuejs",
@@ -22,12 +22,9 @@
     "lib": "vue-cli-service build --target lib --name kplocker-ui --dest lib ./packages/index.js"
   },
   "files": [
-    "lib/*",
-    "dist/*",
-    "src/*",
-    "*.json",
-    "*.js",
-    "*.css"
+    "lib",
+    "src",
+    "packages"
   ],
   "main": "./lib/kplocker-ui.common.js",
   "dependencies": {

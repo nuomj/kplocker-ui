@@ -1,6 +1,15 @@
 # kplocker-ui
 
-基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件，需单独安装element-ui依赖并引入
+基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件（需单独安装element-ui依赖并引入）、业务常用utils工具包
+
+v1.0.0-更新
+
+去掉stDialog组件
+
+v0.0.9-更新
+
+1、增加utils工具包，处理常见业务，如validateMoney校验金额、getDate返回指定日期
+2、增加查询表单组searchBar组件、分页组件pagination
 
 ## Install
 ```
