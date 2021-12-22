@@ -2,6 +2,9 @@
 
 基于element-ui（2.15.6）、vue（2.6.11）封装常用业务组件（需单独安装element-ui依赖并引入）、业务常用utils工具包
 
+v1.0.1-更新
+优化SearchBar组件赋默认值时反选二次点击问题
+
 v1.0.0-更新
 
 去掉stDialog组件

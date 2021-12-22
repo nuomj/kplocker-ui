@@ -104,51 +104,25 @@ export default {
     searchArr: {
       immediate: true,
       handler(newVal) {
-        this.fuzzyData = newVal;
         const obj = {};
         newVal.forEach((item) => {
-          let defautValue = '';
+          let defaultValue = '';
           if (item.valueType === 'Array') {
-            defautValue = [];
+            defaultValue = [];
           }
-          obj[item.name] = item.value ? item.value : defautValue;
+          if (item.value) {
+            defaultValue = item.value;
+            this.oldOptions[item.name] = item.value;
+          }
+          obj[item.name] = defaultValue;
         });
-        console.log(obj);
-        this.fuzzyForm = Object.assign({}, this.fuzzyForm, obj);
-        // this.getZoneListFun()
+        this.fuzzyData = newVal;
+        this.fuzzyForm = obj;
       },
       deep: true, // 深度监听
     },
   },
   methods: {
-    // getZoneListFun() {
-    //   getZoneList({ zoneType: 'biz' })
-    //     .then(res => {
-    //       this.zoneList = fixObjtoArr(res.data, 'zoneName', 'zoneId')
-    //       this.searchArr.forEach(search => {
-    //         if (search.name === 'bizZoneId') {
-    //           search.optArr = this.zoneList
-    //           if (search.multiple) {
-    //             search.optArr.unshift({ value: 'ALL_SELECT', label: '全部' })
-    //           }
-    //           if (search.selAll) {
-    //             const arr = []
-    //             for (let i = 0; i < search.optArr.length; i++) {
-    //               arr.push(search.optArr[i].value)
-    //             }
-    //             this.oldOptions[0] = arr
-    //             this.fuzzyForm[search.name] = arr
-    //           }
-    //         }
-    //         if (search.source) {
-    //           this.$emit('getResource', res.data)
-    //         }
-    //       })
-    //     })
-    //     .catch(error => {
-    //       process.env.NODE_ENV === 'development' && console.log(error)
-    //     })
-    // },
     search() {
       this.$emit('search', this.fuzzyForm);
     },
@@ -174,7 +148,8 @@ export default {
         });
       }
     },
-    changeSelect(obj, val) {
+    changeSelect(obj, value) {
+      const val = value;
       console.log(obj, val);
       if (obj.clearValues && obj.clearValues.length > 0) {
         const _clearValues = obj.clearValues;
@@ -205,7 +180,6 @@ export default {
         return;
       }
       // 多选
-      let resultArr = [];
       let temporaryArr = val;
       const allValues = [];
       // 保留所有值
@@ -213,7 +187,7 @@ export default {
         allValues.push(item.value);
       }
       // 用来储存上一次的值，可以进行对比
-      const oldVal = this.oldOptions.length === 1 ? this.oldOptions[0] : [];
+      const oldVal = this.oldOptions[obj.name].length === 0 ? [] : this.oldOptions[obj.name];
       // 若是全部选择
       if (val.includes('ALL_SELECT')) temporaryArr = allValues;
       // 取消全部选中 上次有 当前没有 表示取消全选
@@ -229,27 +203,20 @@ export default {
       if (!oldVal.includes('ALL_SELECT') && !val.includes('ALL_SELECT')) {
         if (val.length === allValues.length - 1) temporaryArr = ['ALL_SELECT'].concat(val);
       }
+      // if (temporaryArr[0] === 'ALL_SELECT') {
+      //   temporaryArr.splice(0, 1)
+      // }
       // 储存当前最后的结果 作为下次的老数据
-      this.oldOptions[0] = temporaryArr;
-      if (temporaryArr[0] === 'ALL_SELECT') {
-        var arr = [].concat(temporaryArr);
-        arr.splice(0, 1);
-        resultArr = arr;
-      } else {
-        resultArr = temporaryArr;
-      }
-
-      // console.log('resultArr:', resultArr)
-      // console.log('temporaryArr:', temporaryArr)
+      this.oldOptions[obj.name] = temporaryArr;
       this.fuzzyForm[obj.name] = temporaryArr;
       if (obj.change) {
         const _obj = {
           name: obj.name,
-          value: resultArr,
+          value: temporaryArr,
         };
         this.$emit('changeSelect', _obj);
       } else {
-        this.$emit('changeSelect', resultArr);
+        this.$emit('changeSelect', temporaryArr);
       }
     },
     handleAdd() {
