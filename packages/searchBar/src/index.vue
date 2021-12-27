@@ -66,6 +66,9 @@
     <el-form-item v-if="reset">
       <el-button class="reset" @click="resetForm">清空条件</el-button>
     </el-form-item>
+    <el-form-item>
+      <slot name="footer"></slot>
+    </el-form-item>
   </el-form>
 </template>
 <script>
