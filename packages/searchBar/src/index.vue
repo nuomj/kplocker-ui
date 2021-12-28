@@ -1,7 +1,14 @@
 <template>
   <el-form ref="fuzzyForm" :inline="true" :model="fuzzyForm" class="searchBar">
     <el-form-item v-for="item in fuzzyData" :key="item.name">
-      <el-input v-if="item.type === 'input'" v-model.trim="fuzzyForm[item.name]" :clearable="!item.clearable" :placeholder="item.placeholder" :maxlength="item.maxlength ? item.maxlength : ''" />
+      <el-input
+        v-if="item.type === 'input'"
+        v-model.trim="fuzzyForm[item.name]"
+        :clearable="!item.clearable"
+        :placeholder="item.placeholder"
+        :maxlength="item.maxlength ? item.maxlength : ''"
+        :style="{ width: item.width }"
+      />
       <el-select
         v-if="item.type === 'select' && !item.showVisible"
         v-model="fuzzyForm[item.name]"
@@ -30,6 +37,7 @@
         :value-format="item.format ? item.format : 'yyyy-MM-dd'"
         :type="item.typeDesc ? item.typeDesc : 'date'"
         :placeholder="item.placeholder"
+        :style="{ width: item.width }"
       />
       <el-date-picker
         v-if="item.type === 'daterange'"
@@ -42,6 +50,7 @@
         :end-placeholder="item.endPlaceholder"
         value-format="yyyy-MM-dd"
         :picker-options="item.pickerOptions"
+        :style="{ width: item.width }"
       />
       <el-date-picker
         v-if="item.type === 'datetimerange'"
@@ -54,8 +63,9 @@
         :end-placeholder="item.endPlaceholder"
         :value-format="item.valueFormat || 'yyyy-MM-dd HH:mm:ss'"
         :format="item.format || 'yyyy-MM-dd HH:mm:ss'"
+        :style="{ width: item.width }"
       />
-      <el-date-picker v-if="item.type === 'month'" v-model="fuzzyForm[item.name]" type="month" :placeholder="item.placeholder" value-format="yyyy-MM" />
+      <el-date-picker v-if="item.type === 'month'" v-model="fuzzyForm[item.name]" type="month" :placeholder="item.placeholder" :style="{ width: item.width }" value-format="yyyy-MM" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" class="search-btn" @click="search">查询</el-button>
