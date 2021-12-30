@@ -68,6 +68,9 @@
       <el-date-picker v-if="item.type === 'month'" v-model="fuzzyForm[item.name]" type="month" :placeholder="item.placeholder" :style="{ width: item.width }" value-format="yyyy-MM" />
     </el-form-item>
     <el-form-item>
+      <slot name="customize"></slot>
+    </el-form-item>
+    <el-form-item>
       <el-button type="primary" class="search-btn" @click="search">查询</el-button>
     </el-form-item>
     <el-form-item v-if="addBtn">
