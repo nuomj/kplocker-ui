@@ -146,19 +146,22 @@ export default {
       this.$emit('clearSearch');
       if (this.resetOrigin) {
         this.searchArr.forEach((item) => {
-          let defautValue = '';
+          let defaultValue = '';
           if (item.valueType === 'Array') {
-            defautValue = [];
+            defaultValue = [];
           }
-          this.fuzzyForm[item.name] = item.value ? item.value : defautValue;
+          this.fuzzyForm[item.name] = item.value ? item.value : defaultValue;
+          this.oldOptions[item.name] = item.value ? item.value : defaultValue;
         });
       } else {
         Object.keys(this.fuzzyForm).forEach(() => {
           this.searchArr.forEach((item) => {
             if (item.valueType === 'Array') {
               this.fuzzyForm[item.name] = [];
+              this.oldOptions[item.name] = [];
             } else {
               this.fuzzyForm[item.name] = '';
+              this.oldOptions[item.name] = '';
             }
           });
         });
@@ -166,7 +169,6 @@ export default {
     },
     changeSelect(obj, value) {
       const val = value;
-      console.log(obj, val);
       if (obj.clearValues && obj.clearValues.length > 0) {
         const _clearValues = obj.clearValues;
         for (let i = 0; i < _clearValues.length; i++) {

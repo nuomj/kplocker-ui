@@ -25,6 +25,9 @@ Vue.use(StDialog)
 MIT
 ```
 
+## Update
+v0.1.5-更新  fix:解决清除条件后，有默认值的选项需要二次点击的问题
+
 v0.1.4-更新
 SearchBar组件扩展，在查询前增加customize插槽，用于自定义查询条件
 
