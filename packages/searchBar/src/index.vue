@@ -205,7 +205,10 @@ export default {
         allValues.push(item.value);
       }
       // 用来储存上一次的值，可以进行对比
-      const oldVal = this.oldOptions[obj.name].length === 0 ? [] : this.oldOptions[obj.name];
+      let oldVal = []
+      if (this.oldOptions[obj.name]?.length) {
+        oldVal = this.oldOptions[obj.name];
+      }
       // 若是全部选择
       if (val.includes('ALL_SELECT')) temporaryArr = allValues;
       // 取消全部选中 上次有 当前没有 表示取消全选

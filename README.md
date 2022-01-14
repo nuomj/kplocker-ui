@@ -26,6 +26,9 @@ MIT
 ```
 
 ## Update
+
+v0.1.6-更新  fix:解决SearchBar内select多选不给默认值时找不到length属性的bug
+
 v0.1.5-更新  fix:解决清除条件后，有默认值的选项需要二次点击的问题
 
 v0.1.4-更新
