@@ -120,6 +120,7 @@ export default {
     searchArr: {
       immediate: true,
       handler(newVal) {
+        const oldFuzzyForm = JSON.parse(JSON.stringify(this.fuzzyForm))
         const obj = {};
         newVal.forEach((item) => {
           let defaultValue = '';
@@ -130,7 +131,11 @@ export default {
             defaultValue = item.value;
             this.oldOptions[item.name] = item.value;
           }
-          obj[item.name] = defaultValue;
+          if(item.reset){
+            obj[item.name] = defaultValue;
+          }else{
+             (oldFuzzyForm && oldFuzzyForm[item.name]?.length) ? (obj[item.name] = oldFuzzyForm[item.name]) : (obj[item.name] = defaultValue)
+          }
         });
         this.fuzzyData = newVal;
         this.fuzzyForm = obj;
